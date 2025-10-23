@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brainrot Script Loader</title>
+    <style>
+        /* Thiết lập cơ bản */
+        body {
+            background-color: #121212; /* Nền tối */
+            color: #e0e0e0; /* Chữ sáng */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Container chính của nội dung */
+        .container {
+            background-color: #1e1e1e; /* Nền tối hơn cho container */
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Hiệu ứng đổ bóng */
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            border-top: 5px solid #00aaff; /* Đường viền nổi bật */
+        }
+
+        /* Tiêu đề */
+        h1 {
+            color: #00aaff; /* Màu xanh nổi bật */
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            letter-spacing: 1px;
+        }
+
+        /* Khu vực hiển thị Script */
+        .script-display {
+            background-color: #2d2d2d;
+            border: 1px solid #444;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow-x: auto; /* Cho phép cuộn ngang nếu script quá dài */
+            text-align: left;
+            position: relative;
+        }
+
+        /* Đoạn script */
+        #script-code {
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 1.05em;
+            color: #c3e88d; /* Màu xanh lá nhạt cho code */
+            user-select: all; /* Cho phép chọn toàn bộ */
+            word-break: break-all;
+        }
+
+        /* Nút Copy */
+        #copy-button {
+            background-color: #00aaff; /* Màu nền nút */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 0;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background-color 0.3s ease, transform 0.1s;
+            font-weight: bold;
+            box-shadow: 0 4px #0077cc; /* Hiệu ứng 3D nhẹ */
+        }
+
+        #copy-button:hover {
+            background-color: #0099e6; /* Màu khi rê chuột */
+        }
+
+        #copy-button:active {
+            background-color: #0077cc;
+            box-shadow: 0 1px #0077cc;
+            transform: translateY(3px); /* Hiệu ứng nhấn */
+        }
+
+        /* Thông báo sao chép thành công */
+        #copy-message {
+            margin-top: 15px;
+            color: #c3e88d; /* Màu thông báo */
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        #copy-message.visible {
+            opacity: 1;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🛠️ Brainrot Script Loader 🛠️</h1>
+
+        <p>Vui lòng sao chép đoạn script dưới đây và dán vào Executor của bạn:</p>
+
+        <div class="script-display">
+            <code id="script-code">
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/PhongYTB/Methodbrainrot/refs/heads/main/script.obfuscated.lua.txt"))()
+            </code>
+        </div>
+
+        <button id="copy-button">
+            ✨ Sao chép Script ✨
+        </button>
+
+        <p id="copy-message">Đã sao chép vào bộ nhớ tạm! ✅</p>
+
+    </div>
+
+    <script>
+        const scriptCode = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/PhongYTB/Methodbrainrot/refs/heads/main/script.obfuscated.lua.txt\"))()";
+        const copyButton = document.getElementById('copy-button');
+        const copyMessage = document.getElementById('copy-message');
+
+        copyButton.addEventListener('click', async () => {
+            try {
+                // Sử dụng Clipboard API hiện đại
+                await navigator.clipboard.writeText(scriptCode);
+
+                // Hiển thị thông báo thành công
+                copyMessage.classList.add('visible');
+                copyButton.textContent = 'Đã Sao Chép! 🎉';
+
+                // Ẩn thông báo sau 2 giây
+                setTimeout(() => {
+                    copyMessage.classList.remove('visible');
+                    copyButton.textContent = '✨ Sao chép Script ✨';
+                }, 2000);
+
+            } catch (err) {
+                // Nếu Clipboard API thất bại (ví dụ: trình duyệt cũ/không an toàn)
+                console.error('Không thể sao chép bằng API:', err);
+
+                // Fallback: Sử dụng cách sao chép truyền thống (tạo textarea tạm thời)
+                const tempTextArea = document.createElement('textarea');
+                tempTextArea.value = scriptCode;
+                document.body.appendChild(tempTextArea);
+                tempTextArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempTextArea);
+
+                // Hiển thị thông báo
+                copyMessage.classList.add('visible');
+                copyButton.textContent = 'Đã Sao Chép! 🎉';
+                
+                setTimeout(() => {
+                    copyMessage.classList.remove('visible');
+                    copyButton.textContent = '✨ Sao chép Script ✨';
+                }, 2000);
+            }
+        });
+    </script>
+
+</body>
+  </html>
