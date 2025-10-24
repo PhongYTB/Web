@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brainrot Script Loader</title>
+    <title>Phong Hub Script Loader</title>
     <style>
-        /* Thiết lập cơ bản */
+        /* Thiết lập cơ bản (Nền tối) */
         body {
-            background-color: #121212; /* Nền tối */
-            color: #e0e0e0; /* Chữ sáng */
+            background-color: #121212;
+            color: #e0e0e0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
@@ -18,21 +18,21 @@
             padding: 20px;
         }
 
-        /* Container chính của nội dung */
+        /* Container chính */
         .container {
-            background-color: #1e1e1e; /* Nền tối hơn cho container */
+            background-color: #1e1e1e;
             padding: 40px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Hiệu ứng đổ bóng */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
             max-width: 600px;
             width: 100%;
             text-align: center;
-            border-top: 5px solid #00aaff; /* Đường viền nổi bật */
+            border-top: 5px solid #ff4500; /* Màu cam nổi bật (đã đổi màu) */
         }
 
         /* Tiêu đề */
         h1 {
-            color: #00aaff; /* Màu xanh nổi bật */
+            color: #ff4500; /* Màu cam nổi bật */
             margin-bottom: 25px;
             font-size: 1.8em;
             letter-spacing: 1px;
@@ -45,7 +45,7 @@
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 20px;
-            overflow-x: auto; /* Cho phép cuộn ngang nếu script quá dài */
+            overflow-x: auto;
             text-align: left;
             position: relative;
         }
@@ -54,14 +54,14 @@
         #script-code {
             font-family: 'Consolas', 'Courier New', monospace;
             font-size: 1.05em;
-            color: #c3e88d; /* Màu xanh lá nhạt cho code */
-            user-select: all; /* Cho phép chọn toàn bộ */
+            color: #ff9800; /* Màu cam nhạt cho code */
+            user-select: all;
             word-break: break-all;
         }
 
         /* Nút Copy */
         #copy-button {
-            background-color: #00aaff; /* Màu nền nút */
+            background-color: #ff4500; /* Màu nền nút */
             color: white;
             border: none;
             padding: 12px 25px;
@@ -74,23 +74,23 @@
             border-radius: 6px;
             transition: background-color 0.3s ease, transform 0.1s;
             font-weight: bold;
-            box-shadow: 0 4px #0077cc; /* Hiệu ứng 3D nhẹ */
+            box-shadow: 0 4px #cc3700; /* Hiệu ứng 3D nhẹ */
         }
 
         #copy-button:hover {
-            background-color: #0099e6; /* Màu khi rê chuột */
+            background-color: #e63e00; /* Màu khi rê chuột */
         }
 
         #copy-button:active {
-            background-color: #0077cc;
-            box-shadow: 0 1px #0077cc;
+            background-color: #cc3700;
+            box-shadow: 0 1px #cc3700;
             transform: translateY(3px); /* Hiệu ứng nhấn */
         }
 
         /* Thông báo sao chép thành công */
         #copy-message {
             margin-top: 15px;
-            color: #c3e88d; /* Màu thông báo */
+            color: #ff9800; /* Màu thông báo */
             font-weight: bold;
             opacity: 0;
             transition: opacity 0.5s ease;
@@ -105,9 +105,9 @@
 <body>
 
     <div class="container">
-        <h1>🛠️ Brainrot Script Loader 🛠️</h1>
+        <h1>🚀 Phong Hub Script Loader 🚀</h1>
 
-        <p>Vui lòng sao chép đoạn script dưới đây và dán vào Executor của bạn:</p>
+        <p>Vui lòng **sao chép** đoạn script dưới đây và dán vào Executor của bạn:</p>
 
         <div class="script-display">
             <code id="script-code">
@@ -124,13 +124,14 @@
     </div>
 
     <script>
-        const scriptCode = "loadstring(game:HttpGet("https://raw.githubusercontent.com/PhongYTB/Methodbrainrots/refs/heads/main/phong%20hub.lua.txt"))()";
+        // Cập nhật biến với script mới
+        const scriptCode = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/PhongYTB/Methodbrainrots/refs/heads/main/phong%20hub.lua.txt\"))()";
         const copyButton = document.getElementById('copy-button');
         const copyMessage = document.getElementById('copy-message');
 
         copyButton.addEventListener('click', async () => {
             try {
-                // Sử dụng Clipboard API hiện đại
+                // Sử dụng Clipboard API để sao chép
                 await navigator.clipboard.writeText(scriptCode);
 
                 // Hiển thị thông báo thành công
@@ -144,10 +145,7 @@
                 }, 2000);
 
             } catch (err) {
-                // Nếu Clipboard API thất bại (ví dụ: trình duyệt cũ/không an toàn)
-                console.error('Không thể sao chép bằng API:', err);
-
-                // Fallback: Sử dụng cách sao chép truyền thống (tạo textarea tạm thời)
+                // Fallback (cho trình duyệt cũ): tạo textarea tạm thời
                 const tempTextArea = document.createElement('textarea');
                 tempTextArea.value = scriptCode;
                 document.body.appendChild(tempTextArea);
@@ -168,4 +166,4 @@
     </script>
 
 </body>
-  </html>
+</html>
