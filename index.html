@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phong Hub Script Loader</title>
+    <title>Trình tải tập lệnh Phong Hub - Đa năng</title>
     <style>
-        /* Thiết lập cơ bản (Nền tối) */
+        /* Setting base (Nền tối) */
         body {
             background-color: #121212;
             color: #e0e0e0;
@@ -24,21 +24,62 @@
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            max-width: 600px;
+            max-width: 650px; /* Tăng chiều rộng để chứa tab */
             width: 100%;
             text-align: center;
-            border-top: 5px solid #ff4500; /* Màu cam nổi bật (đã đổi màu) */
+            border-top: 5px solid #ff4500;
         }
 
         /* Tiêu đề */
         h1 {
-            color: #ff4500; /* Màu cam nổi bật */
-            margin-bottom: 25px;
+            color: #ff4500;
+            margin-bottom: 15px;
             font-size: 1.8em;
             letter-spacing: 1px;
         }
+        
+        /* Bộ chọn Tab */
+        .tab-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #333;
+        }
 
-        /* Khu vực hiển thị Script */
+        .tab-button {
+            background-color: #333;
+            color: #e0e0e0;
+            border: none;
+            padding: 12px 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 8px 8px 0 0;
+            margin: 0 5px;
+        }
+
+        .tab-button:hover {
+            background-color: #444;
+        }
+
+        .tab-button.active {
+            background-color: #ff4500;
+            color: white;
+            border-bottom: 3px solid #ff4500;
+        }
+
+        /* Nội dung Tab */
+        .tab-content {
+            display: none;
+            padding-top: 10px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Script hiển thị khu vực */
         .script-display {
             background-color: #2d2d2d;
             border: 1px solid #444;
@@ -51,7 +92,7 @@
         }
 
         /* Đoạn script */
-        #script-code {
+        .script-code {
             font-family: 'Consolas', 'Courier New', monospace;
             font-size: 1.05em;
             color: #ff9800; /* Màu cam nhạt cho code */
@@ -59,14 +100,13 @@
             word-break: break-all;
         }
 
-        /* Nút Copy */
-        #copy-button {
-            background-color: #ff4500; /* Màu nền nút */
+        /* Sao chép nút */
+        .copy-button {
+            background-color: #ff4500;
             color: white;
             border: none;
             padding: 12px 25px;
             text-align: center;
-            text-decoration: none;
             display: inline-block;
             font-size: 16px;
             margin: 10px 0;
@@ -74,23 +114,23 @@
             border-radius: 6px;
             transition: background-color 0.3s ease, transform 0.1s;
             font-weight: bold;
-            box-shadow: 0 4px #cc3700; /* Hiệu ứng 3D nhẹ */
+            box-shadow: 0 4px #cc3700;
         }
 
-        #copy-button:hover {
-            background-color: #e63e00; /* Màu khi rê chuột */
+        .copy-button:hover {
+            background-color: #e63e00;
         }
 
-        #copy-button:active {
+        .copy-button:active {
             background-color: #cc3700;
             box-shadow: 0 1px #cc3700;
-            transform: translateY(3px); /* Hiệu ứng nhấn */
+            transform: translateY(3px);
         }
 
-        /* Thông báo sao chép thành công */
+        /* Sao chép thông báo thành công */
         #copy-message {
             margin-top: 15px;
-            color: #ff9800; /* Màu thông báo */
+            color: #ff9800;
             font-weight: bold;
             opacity: 0;
             transition: opacity 0.5s ease;
@@ -105,33 +145,81 @@
 <body>
 
     <div class="container">
-        <h1>🚀 Phong Hub Script Loader 🚀</h1>
+        <h1>🚀 Trình tải tập lệnh Phong Hub Đa năng 🚀</h1>
+
+        <div class="tab-selector">
+            <button class="tab-button active" onclick="openTab('method')">🧠 Script Method Brainrot</button>
+            <button class="tab-button" onclick="openTab('dupe')">💰 Script Dupe Brainrot</button>
+        </div>
 
         <p>Vui lòng **sao chép** đoạn script dưới đây và dán vào Executor của bạn:</p>
 
-        <div class="script-display">
-            <code id="script-code">
-                loadstring(game:HttpGet("https://raw.githubusercontent.com/PhongYTB/Methodbrainrots/refs/heads/main/phong%20hub.lua.txt"))()
-            </code>
+        <div id="method" class="tab-content active">
+            <div class="script-display">
+                <code class="script-code" id="method-script-code">
+                    loadstring(game:HttpGet("https://raw.githubusercontent.com/PhongYTB/Methodbrainrots/refs/heads/main/phong%20hub.lua.txt"))()
+                </code>
+            </div>
+
+            <button class="copy-button" onclick="copyScript('method-script-code')">
+                ✨ Sao chép Script Method ✨
+            </button>
         </div>
 
-        <button id="copy-button">
-            ✨ Sao chép Script ✨
-        </button>
+        <div id="dupe" class="tab-content">
+            <div class="script-display">
+                <code class="script-code" id="dupe-script-code">
+                    loadstring(game:HttpGet("https://raw.githubusercontent.com/PhongYTB/Methodbrainrots/refs/heads/main/dupe%20brainrot.lua"))()
+                </code>
+            </div>
 
-        <p id="copy-message">Đã sao chép vào bộ nhớ tạm! ✅</p>
+            <button class="copy-button" onclick="copyScript('dupe-script-code')">
+                ✨ Sao chép Script Dupe ✨
+            </button>
+        </div>
+
+        <p id="copy-message">Đã sao chép vào bộ nhớ tạm thời! ✅</p>
 
     </div>
 
     <script>
-        // Cập nhật biến với script mới
-        const scriptCode = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/PhongYTB/Methodbrainrots/refs/heads/main/phong%20hub.lua.txt\"))()";
-        const copyButton = document.getElementById('copy-button');
         const copyMessage = document.getElementById('copy-message');
 
-        copyButton.addEventListener('click', async () => {
+        /**
+         * Chuyển đổi giữa các tab
+         * @param {string} tabName - ID của tab muốn mở ('method' hoặc 'dupe').
+         */
+        function openTab(tabName) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+
+            const tabButtons = document.getElementsByClassName("tab-button");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+
+            document.getElementById(tabName).classList.add('active');
+            // Tìm nút tương ứng và thêm class 'active'
+            const activeTabButton = Array.from(tabButtons).find(btn => btn.getAttribute('onclick').includes(`'${tabName}'`));
+            if (activeTabButton) {
+                activeTabButton.classList.add('active');
+            }
+        }
+
+        /**
+         * Sao chép script từ ID đã cho
+         * @param {string} elementId - ID của phần tử <code> chứa script.
+         */
+        async function copyScript(elementId) {
+            const scriptElement = document.getElementById(elementId);
+            const scriptCode = scriptElement.textContent.trim();
+            const copyButton = scriptElement.closest('.tab-content').querySelector('.copy-button');
+            const originalText = copyButton.textContent; // Lưu văn bản ban đầu
+
             try {
-                // Sử dụng Clipboard API để sao chép
+                // Sử dụng API Clipboard để sao chép
                 await navigator.clipboard.writeText(scriptCode);
 
                 // Hiển thị thông báo thành công
@@ -141,11 +229,11 @@
                 // Ẩn thông báo sau 2 giây
                 setTimeout(() => {
                     copyMessage.classList.remove('visible');
-                    copyButton.textContent = '✨ Sao chép Script ✨';
+                    copyButton.textContent = originalText;
                 }, 2000);
 
             } catch (err) {
-                // Fallback (cho trình duyệt cũ): tạo textarea tạm thời
+                // Dự phòng (cho trình duyệt cũ): tạo tạm thời vùng văn bản
                 const tempTextArea = document.createElement('textarea');
                 tempTextArea.value = scriptCode;
                 document.body.appendChild(tempTextArea);
@@ -159,9 +247,14 @@
                 
                 setTimeout(() => {
                     copyMessage.classList.remove('visible');
-                    copyButton.textContent = '✨ Sao chép Script ✨';
+                    copyButton.textContent = originalText;
                 }, 2000);
             }
+        }
+
+        // Mở tab 'method' khi tải trang lần đầu
+        document.addEventListener('DOMContentLoaded', () => {
+            openTab('method');
         });
     </script>
 
