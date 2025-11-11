@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!DOCTYPEhtml>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trình tải tập lệnh Phong Hub - Đa năng</title>
+    <title> lấy script  - Đa năng</title>
     <style>
         /* Setting base (Nền tối) */
         body {
@@ -24,7 +24,7 @@
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            max-width: 650px; /* Tăng chiều rộng để chứa tab */
+            max-width: 800px; /* Tăng chiều rộng để chứa 3 tab */
             width: 100%;
             text-align: center;
             border-top: 5px solid #ff4500;
@@ -50,13 +50,14 @@
             background-color: #333;
             color: #e0e0e0;
             border: none;
-            padding: 12px 25px;
+            padding: 12px 20px;
             cursor: pointer;
-            font-size: 1.1em;
+            font-size: 1.0em;
             font-weight: bold;
             transition: background-color 0.3s, color 0.3s;
             border-radius: 8px 8px 0 0;
-            margin: 0 5px;
+            margin: 0 3px;
+            white-space: nowrap; /* Giữ nút tab trên một dòng */
         }
 
         .tab-button:hover {
@@ -79,7 +80,7 @@
             display: block;
         }
 
-        /* Script hiển thị khu vực */
+        /* Kịch bản hiển thị khu vực */
         .script-display {
             background-color: #2d2d2d;
             border: 1px solid #444;
@@ -145,11 +146,14 @@
 <body>
 
     <div class="container">
-        <h1>🚀 Trình tải tập lệnh Phong Hub Đa năng 🚀</h1>
+        <h1>🚀 Trình tải Đa năng Phong Hub tập lệnh 🚀</h1>
 
         <div class="tab-selector">
-            <button class="tab-button active" onclick="openTab('method')">🧠 Script Method Brainrot</button>
-            <button class="tab-button" onclick="openTab('dupe')">💰 Script Dupe Brainrot</button>
+            <button class="tab-button active" onclick="openTab('method')">🧠 method Brainrot</button>
+            
+            <button class="tab-button" onclick="openTab('dupe')">💰 dupe Brainrot</button>
+            
+            <button class="tab-button" onclick="openTab('admin')">⚙️ Script Admin Command</button>
         </div>
 
         <p>Vui lòng **sao chép** đoạn script dưới đây và dán vào Executor của bạn:</p>
@@ -162,7 +166,7 @@
             </div>
 
             <button class="copy-button" onclick="copyScript('method-script-code')">
-                ✨ Sao chép Script Method ✨
+                ✨ Phương pháp sao chép tập lệnh ✨
             </button>
         </div>
 
@@ -177,17 +181,29 @@
                 ✨ Sao chép Script Dupe ✨
             </button>
         </div>
+        
+        <div id="admin" class="tab-content">
+            <div class="script-display">
+                <code class="script-code" id="admin-script-code">
+                    loadstring(game:HttpGet("https://raw.githubusercontent.com/PhongYTB/Loader/refs/heads/main/Admin%20command.lua"))()
+                </code>
+            </div>
 
-        <p id="copy-message">Đã sao chép vào bộ nhớ tạm thời! ✅</p>
+            <button class="copy-button" onclick="copyScript('admin-script-code')">
+                ✨ Sao chép Script Admin Command ✨
+            </button>
+        </div>
+        <p id="copy-message">Đã sao chép tạm thời vào bộ nhớ! ✅</p>
 
     </div>
 
     <script>
+        // SỬA ID TỪ 'sao chép-tin nhắn' THÀNH 'copy-message'
         const copyMessage = document.getElementById('copy-message');
 
         /**
          * Chuyển đổi giữa các tab
-         * @param {string} tabName - ID của tab muốn mở ('method' hoặc 'dupe').
+         * @param {string} tabName - ID của tab muốn mở ('method', 'dupe' hoặc 'admin').
          */
         function openTab(tabName) {
             const tabContents = document.getElementsByClassName("tab-content");
@@ -200,8 +216,9 @@
                 tabButtons[i].classList.remove('active');
             }
 
+            // ID CỦA TAB ĐÃ ĐƯỢC CHUYỂN THÀNH TIẾNG ANH/KHÔNG DẤU: 'method', 'dupe', 'admin'
             document.getElementById(tabName).classList.add('active');
-            // Tìm nút tương ứng và thêm class 'active'
+            // Tìm nút tương ứng và thêm lớp 'active'
             const activeTabButton = Array.from(tabButtons).find(btn => btn.getAttribute('onclick').includes(`'${tabName}'`));
             if (activeTabButton) {
                 activeTabButton.classList.add('active');
@@ -209,14 +226,14 @@
         }
 
         /**
-         * Sao chép script từ ID đã cho
-         * @param {string} elementId - ID của phần tử <code> chứa script.
+         * Sao chép tập lệnh từ ID đã chọn
+         * @param {string} elementId - ID của <code> phần tử chứa tập lệnh.
          */
         async function copyScript(elementId) {
             const scriptElement = document.getElementById(elementId);
             const scriptCode = scriptElement.textContent.trim();
             const copyButton = scriptElement.closest('.tab-content').querySelector('.copy-button');
-            const originalText = copyButton.textContent; // Lưu văn bản ban đầu
+            const originalText = copyButton.textContent; // Lưu văn bản gốc của nút
 
             try {
                 // Sử dụng API Clipboard để sao chép
